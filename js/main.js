@@ -60,7 +60,7 @@ function updatePicture() {
 function updateAttemptNumber() {
   $('#attempt').text(attemptNumber + 1);
 }
-function updatePercentCorrect() {  
+function updatePercentCorrect() {
   $('#percent').text(Math.round((correctAnswers/(attemptNumber+1)) * 100 || 0));
 }
 function colourInput(colour) {
@@ -71,6 +71,12 @@ function showFrenchWord() {
 }
 function hideFrenchWord() {
   $('#frenchWord').hide();
+}
+function showSkipButton() {
+  $('.skip').show();
+}
+function hideSkipButton() {
+  $('.skip').hide();
 }
 function changeButtonText(text) {
   $('.enter').attr('value', text);
@@ -91,6 +97,7 @@ function newAttempt() {
   updateEnglishWord();
   updateFrenchWord();
   changeButtonText('Submit');
+  showSkipButton();
   colourInput('white');
   review = false;
   hideFrenchWord();
@@ -136,6 +143,7 @@ function reviewAttempt(answer) {
   }
   review = true;
   showFrenchWord();
+  hideSkipButton();
   updatePercentCorrect();
 }
 
@@ -149,6 +157,9 @@ $('.fbShareResults').click(function (){
 }, function(response){});
 });
 $('.reset').click(resetGame);
+$('.skip').click(function(event) {
+  reviewAttempt('');
+});
 $('form').submit(function(event) {
   event.preventDefault();
   if (review === false) {
